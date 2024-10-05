@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using zstore.net.Data;
 
@@ -11,9 +12,11 @@ using zstore.net.Data;
 namespace zstore.net.Migrations
 {
     [DbContext(typeof(ZStoreDbContext))]
-    partial class ZStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005134706_AddSlugAndImageToProduct")]
+    partial class AddSlugAndImageToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
