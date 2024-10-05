@@ -1,0 +1,82 @@
+﻿@page
+@model zstore.net.Pages.Admin.Categories.CreateModel
+@{
+    ViewData["Title"] = "New Category";
+}
+
+<div class="bg-white dark:bg-gray-900">
+    <div class="container flex items-center px-6 py-4 mx-auto overflow-x-auto whitespace-nowrap">
+        <a href="/Admin" class="text-gray-600 dark:text-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+        </a>
+        <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+        </span>
+        <a href="/Admin/Categories" class="text-gray-600 dark:text-gray-200 hover:underline">
+            Categories
+        </a>
+        <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+        </span>
+        <span class="text-blue-600 dark:text-blue-400 hover:underline">
+            Create
+        </span>
+    </div>
+</div>
+
+<section class="container px-4 mx-auto py-4">    
+    <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Add new category</h2>
+
+        <form method="post" class="flex flex-col gap-4 mt-4" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="mt-3 text-xs text-red-400"></div>
+            <!-- Category Name -->
+            <div>
+                <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Name"></label>
+                <input asp-for="Category.Name" value="@Model.Category?.Name" placeholder="Name" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" />
+                <p asp-validation-for="Category.Name" class="mt-3 text-xs text-red-400"></p>
+            </div>
+
+            <!-- Category Image -->
+            <div>
+                <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Image"></label>
+                <input asp-for="Category.Image" value="@Model.Category?.Image" placeholder="Image" class="block w-full px-4 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full dark:file:bg-gray-900 dark:file:text-gray-200 dark:text-gray-300 placeholder-gray-400/70 dark:placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-300" />
+                <p asp-validation-for="Category.Image" class="mt-3 text-xs text-red-400"></p>
+            </div>
+
+            <!-- Category Description -->
+            <div>
+                <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Description"></label>
+                <textarea asp-for="Category.Description" value="@Model.Category?.Description" placeholder="Description" rows="3" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"></textarea>
+                <p asp-validation-for="Category.Description" class="mt-3 text-xs text-red-400"></p>
+            </div>
+
+            <!-- Category Type -->
+            <div>
+                <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Type"></label>
+                <input asp-for="Category.Type" value="@Model.Category?.Type" placeholder="Type" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" />
+                <p asp-validation-for="Category.Type" class="mt-3 text-xs text-red-400"></p>
+            </div>
+
+            <!-- Parent Category Dropdown -->
+            <div>
+                <label class="text-gray-700 dark:text-gray-200" asp-for="Category.ParentCategoryId">Parent Category</label>
+                <select asp-for="Category.ParentCategoryId" asp-items="ViewBag.Categories" value="@Model.Category?.ParentCategory?.Id" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600">
+                    <option value="">Select Parent Category</option>
+                </select>
+                <p asp-validation-for="Category.ParentCategoryId" class="mt-3 text-xs text-red-400"></p>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end mt-6">
+                <button class="px-8 py-2 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600">Save</button>
+            </div>
+        </form>
+    </div>
+</section>
