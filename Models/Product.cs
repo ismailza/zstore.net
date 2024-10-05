@@ -37,6 +37,10 @@ public partial class Product
 
   public string? ImageUri { get; set; }
 
+  public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+  public DateTime UpdatedAt { get; set; } = DateTime.Now;
+
   /**
     * Generate a unique slug for the product based on its name.
     * 

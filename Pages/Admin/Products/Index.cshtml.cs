@@ -33,7 +33,7 @@ public class IndexModel : PageModel
         
         // Fetch products for the current page
         Products = await _context.Products
-            .OrderBy(p => p.Name)
+            .OrderByDescending(p => p.UpdatedAt)
             .Skip((CurrentPage - 1) * PageSize)
             .Take(PageSize)
             .Include(p => p.Category)

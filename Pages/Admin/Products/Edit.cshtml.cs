@@ -67,10 +67,10 @@ public class EditModel : PageModel
                 }
                 Product.ImageUri = await _storageService.UploadAsync(Product.Image, "images/products");
             } else {
-                Product.ImageUri = Product.ImageUri;
+                Product.ImageUri = product.ImageUri;
             }
             
-            if (Product.Name != Product.Name)
+            if (Product.Name != product.Name)
             {
                 // Fetch all existing products except the current one
                 var existingProducts = await _context.Products.Where(p => p.Id != Product.Id).ToListAsync();
@@ -78,6 +78,9 @@ public class EditModel : PageModel
             } else {
                 Product.Slug = Product.Slug;
             }
+
+            Product.CreatedAt = product.CreatedAt;
+            Product.UpdatedAt = DateTime.Now;
 
             // Attach the product to the context and mark it as modified
             _context.Attach(Product).State = EntityState.Modified;
