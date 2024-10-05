@@ -71,3 +71,8 @@ appsettings.json
 appsettings.Dev*
 appsettings.Prod*
 appsettings.Test*
+
+# Image files
+/wwwroot/images/categories/*
+/wwwroot/images/products/*
+/wwwroot/images/users/*
