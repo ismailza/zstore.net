@@ -1,7 +1,8 @@
 using DotNetEnv;
+using Microsoft.EntityFrameworkCore;
 using zstore.net.Data;
 using zstore.net.Services.Storage;
-using Microsoft.EntityFrameworkCore;
+using zstore.net.Services.Cart;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,12 @@ builder.Services.AddScoped<IStorageService>(provider => {
         _ => throw new InvalidOperationException("Invalid storage service type"),
     };
 });
+// Add the http context accessor to the container
+builder.Services.AddHttpContextAccessor();
+// Add the session service to the container
+builder.Services.AddSession();
+// Add the cart service to the container
+builder.Services.AddScoped<ICartService, SessionCartService>();
 
 var app = builder.Build();
 
@@ -37,5 +44,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.UseSession();
 
 app.Run();
