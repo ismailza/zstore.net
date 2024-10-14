@@ -1,0 +1,87 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<section class="bg-white dark:bg-gray-900">
+    <div class="container px-6 py-10 mx-auto">
+        <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">Your <span class="underline decoration-blue-500">Shopping Cart</span></h1>
+        <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
+            Here are the items you have added to your cart. You can update the quantity or remove items from your cart.
+        </p>
+        <form method="post" asp-page-handler="ClearCart" class="flex justify-end items-center">
+            <button type="submit" class="px-3 py-2 mt-2 text-sm font-normal text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Clear cart</button>
+        </form>
+
+        <!-- Cart Items -->
+        <div class="grid grid-cols-1 gap-8 mt-8">
+            @foreach (var item in Model.cartItems)
+            {
+                var product = item.Key;
+                var quantity = item.Value;
+                var subtotal = product.Price * quantity;
+
+                <div class="flex flex-col md:flex-row w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                    <!-- Item Image -->
+                    <a href="/Products/@product.Slug" class="w-full md:w-1/3 flex justify-center items-center">
+                        <img src="@product.ImageUri" alt="@product.Name" class="w-full md:w-1/3 object-cover object-center" />
+                    </a>
+                    
+                    <!-- Item Details -->
+                    <div class="w-full md:w-2/3 p-4">
+                        <a href="/Products/@product.Slug">
+                            <h1 class="text-xl font-bold text-gray-800 dark:text-white">@product.Name</h1>
+                        </a>
+                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">@product.Description</p>
+
+                        <!-- Quantity Selector & Remove Button -->
+                        <div class="flex items-center justify-between mt-3">
+                            <div class="flex">
+                                <form method="post" asp-page-handler="UpdateQuantity">
+                                    <input type="hidden" name="productId" value="@product.Id" />
+                                    <input type="hidden" name="quantity" value="-1" />
+                                    <button type="submit" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200"
+                                        disabled="@(quantity == 1 ? "disabled" : null)">
+                                        &minus;
+                                    </button>
+                                </form>
+                                <span class="px-4 py-2 mx-1 text-gray-700 bg-white rounded-md dark:bg-gray-800 dark:text-gray-200">@quantity</span>
+                                <form method="post" asp-page-handler="UpdateQuantity">
+                                    <input type="hidden" name="productId" value="@product.Id" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <button type="submit" class="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200"
+                                        disabled="@((quantity == product.Quantity) ? "disabled" : null)">
+                                        &plus;
+                                    </button>
+                                </form>
+                            </div>
+                            <form method="post" asp-page-handler="RemoveFromCart">
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <button title="Remove" type="submit" class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Subtotal & Add to Cart -->
+                        <div class="flex justify-between mt-4 items-center">
+                            <h1 class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">Subtotal: @subtotal MAD</h1>
+                            <button class="px-3 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Total Summary -->
+        <div class="mt-8">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white">Total: @Model.cartItems.Sum(item => item.Key.Price * item.Value) MAD</h2>
+            <button class="mt-4 px-6 py-3 text-sm font-bold text-white bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+</section>

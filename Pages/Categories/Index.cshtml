@@ -1,0 +1,79 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="bg-white dark:bg-gray-900">
+    <div class="container flex items-center px-6 py-4 mx-auto overflow-x-auto whitespace-nowrap">
+        <a href="/" class="text-gray-600 dark:text-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+        </a>
+        <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+        </span>
+        <span class="text-blue-600 dark:text-blue-400 hover:underline">
+            Categories
+        </span>
+    </div>
+</div>
+
+<section class="bg-white dark:bg-gray-900">
+    <div class="container px-6 py-10 mx-auto">
+        <div class="text-center">
+            <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
+                explore our <span class="text-blue-500">categories</span>
+            </h1>
+            <p class="max-w-lg mx-auto mt-4 text-gray-500">
+                Find the best products in each category and enjoy shopping.
+            </p>
+        </div>
+
+        <div class="mt-8 space-y-8 lg:mt-12">
+            @foreach (var parentCategory in Model.CategoriesGroupedByParent)
+            {
+                <div class="flex items-center p-2 border border-gray-300 transition-colors duration-300 transform cursor-pointer group hover:bg-blue-600 rounded-xl">
+                    <img class="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" 
+                        src="/@(string.IsNullOrEmpty(@parentCategory.Key?.ImageUri) ? "images/placeholder.svg" : @parentCategory.Key?.ImageUri)" alt="">
+                    <div class="px-4">
+                        <h1 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-white">
+                            @parentCategory.Key?.Name
+                        </h1>
+                        <p class="text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
+                            @parentCategory.Key?.Type
+                        </p>
+                        <p class="mt-2 text-sm text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
+                            @parentCategory.Key?.Description
+                        </p>
+                    </div>
+                </div>
+                @if (parentCategory.Value.Any()) {
+                <div class="grid w-full grid-cols-1 gap-2 mt-4 2xl:grid-cols-6 md:grid-cols-3 lg:grid-cols-4">
+                    @foreach (var subCategory in parentCategory.Value) {
+                    <a href="/Categories/@subCategory.Slug"
+                        class="flex flex-col items-center p-2 transition-colors duration-300 transform cursor-pointer group hover:bg-blue-600 rounded-xl">
+                        <img class="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" 
+                            src="/@(string.IsNullOrEmpty(@subCategory.ImageUri) ? "images/placeholder.svg" : @subCategory.ImageUri)" alt="">
+                        <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-white">
+                            @subCategory.Name
+                        </h1>
+                        <p class="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
+                            @subCategory.Type
+                        </p>
+                    </a>
+                    }
+                </div>
+                } else {
+                    <p class="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
+                        No subcategories found.
+                    </p>
+                }
+            }
+            
+        </div>
+    </div>
+</section>
