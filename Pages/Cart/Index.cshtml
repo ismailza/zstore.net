@@ -66,7 +66,7 @@
 
                         <!-- Subtotal & Add to Cart -->
                         <div class="flex justify-between mt-4 items-center">
-                            <h1 class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">Subtotal: @subtotal.ToString("C")</h1>
+                            <h1 class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">Subtotal: @subtotal MAD</h1>
                             <button class="px-3 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Checkout</button>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
 
         <!-- Total Summary -->
         <div class="mt-8">
-            <h2 class="text-xl font-bold text-gray-800 dark:text-white">Total: @Model.cartItems.Sum(item => item.Key.Price * item.Value).ToString("C")</h2>
+            <h2 class="text-xl font-bold text-gray-800 dark:text-white">Total: @Model.cartItems.Sum(item => item.Key.Price * item.Value) MAD</h2>
             <button class="mt-4 px-6 py-3 text-sm font-bold text-white bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
                 Proceed to Checkout
             </button>
