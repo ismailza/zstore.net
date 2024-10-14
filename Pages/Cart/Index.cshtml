@@ -24,13 +24,15 @@
 
                 <div class="flex flex-col md:flex-row w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
                     <!-- Item Image -->
-                    <div class="w-full md:w-1/3 flex justify-center items-center">
+                    <a href="/Products/@product.Slug" class="w-full md:w-1/3 flex justify-center items-center">
                         <img src="@product.ImageUri" alt="@product.Name" class="w-full md:w-1/3 object-cover object-center" />
-                    </div>
+                    </a>
                     
                     <!-- Item Details -->
                     <div class="w-full md:w-2/3 p-4">
-                        <h1 class="text-xl font-bold text-gray-800 dark:text-white">@product.Name</h1>
+                        <a href="/Products/@product.Slug">
+                            <h1 class="text-xl font-bold text-gray-800 dark:text-white">@product.Name</h1>
+                        </a>
                         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">@product.Description</p>
 
                         <!-- Quantity Selector & Remove Button -->
