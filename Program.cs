@@ -28,7 +28,17 @@ builder.Services.AddHttpContextAccessor();
 // Add the session service to the container
 builder.Services.AddSession();
 // Add the cart service to the container
-builder.Services.AddScoped<ICartService, SessionCartService>();
+builder.Services.AddScoped<ICartService>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    return configuration.GetValue<string>("Cart:Storage") switch
+    {
+        "Session" => new SessionCartService(provider.GetRequiredService<IHttpContextAccessor>()),
+        "Cookie" => new CookieCartService(provider.GetRequiredService<IHttpContextAccessor>()),
+        _ => throw new InvalidOperationException("Invalid cart storage type"),
+    };
+});
+
 
 var app = builder.Build();
 
