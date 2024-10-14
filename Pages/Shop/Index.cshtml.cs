@@ -5,6 +5,7 @@ using zstore.net.Data;
 using zstore.net.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using zstore.net.Services.Cart;
 
 namespace zstore.net.Pages.Shop;
 
@@ -12,11 +13,13 @@ public class IndexModel : PageModel
 {
   private readonly ILogger<IndexModel> _logger;
   private readonly ZStoreDbContext _context;
+  private readonly ICartService _cartService;
 
-  public IndexModel(ILogger<IndexModel> logger, ZStoreDbContext context)
+  public IndexModel(ILogger<IndexModel> logger, ZStoreDbContext context, ICartService cartService)
   {
     _logger = logger;
     _context = context;
+    _cartService = cartService;
   }
 
   public List<Product> Products { get; set; } = [];
@@ -73,5 +76,12 @@ public class IndexModel : PageModel
         .ToListAsync();
 
     ViewData["Categories"] = new SelectList(_context.Categories, "Id", "Name");
+  }
+
+  public IActionResult OnPostAddToCart(long productId, int quantity = 1)
+  {
+    _cartService.AddToCart(productId, quantity);
+    // Redirect to the cart page
+    return RedirectToPage("/Cart/Index");
   }
 }
