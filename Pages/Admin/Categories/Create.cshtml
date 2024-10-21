@@ -40,28 +40,28 @@
             <div>
                 <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Name"></label>
                 <input asp-for="Category.Name" value="@Model.Category?.Name" placeholder="Name" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" />
-                <p asp-validation-for="Category.Name" class="mt-3 text-xs text-red-400"></p>
+                <span asp-validation-for="Category.Name" class="mt-3 text-xs text-red-400"></span>
             </div>
 
             <!-- Category Image -->
             <div>
                 <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Image"></label>
                 <input asp-for="Category.Image" value="@Model.Category?.Image" placeholder="Image" class="block w-full px-4 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full dark:file:bg-gray-900 dark:file:text-gray-200 dark:text-gray-300 placeholder-gray-400/70 dark:placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-blue-300" />
-                <p asp-validation-for="Category.Image" class="mt-3 text-xs text-red-400"></p>
+                <span asp-validation-for="Category.Image" class="mt-3 text-xs text-red-400"></span>
             </div>
 
             <!-- Category Description -->
             <div>
                 <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Description"></label>
                 <textarea asp-for="Category.Description" value="@Model.Category?.Description" placeholder="Description" rows="3" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"></textarea>
-                <p asp-validation-for="Category.Description" class="mt-3 text-xs text-red-400"></p>
+                <span asp-validation-for="Category.Description" class="mt-3 text-xs text-red-400"></span>
             </div>
 
             <!-- Category Type -->
             <div>
                 <label class="text-gray-700 dark:text-gray-200" asp-for="Category.Type"></label>
                 <input asp-for="Category.Type" value="@Model.Category?.Type" placeholder="Type" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" />
-                <p asp-validation-for="Category.Type" class="mt-3 text-xs text-red-400"></p>
+                <span asp-validation-for="Category.Type" class="mt-3 text-xs text-red-400"></span>
             </div>
 
             <!-- Parent Category Dropdown -->
@@ -70,7 +70,7 @@
                 <select asp-for="Category.ParentCategoryId" asp-items="ViewBag.Categories" value="@Model.Category?.ParentCategory?.Id" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600">
                     <option value="">Select Parent Category</option>
                 </select>
-                <p asp-validation-for="Category.ParentCategoryId" class="mt-3 text-xs text-red-400"></p>
+                <span asp-validation-for="Category.ParentCategoryId" class="mt-3 text-xs text-red-400"></span>
             </div>
 
             <!-- Submit Button -->
