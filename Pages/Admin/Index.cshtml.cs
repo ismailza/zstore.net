@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace zstore.net.Pages.Admin;
 
-public class IndexModel : PageModel
+public class IndexModel : AdminPageModel
 {
     private readonly ILogger<IndexModel> _logger;
 

@@ -9,7 +9,7 @@ using zstore.net.Services.Storage;
 
 namespace zstore.net.Pages.Admin.Admins;
 
-public class CreateModel : PageModel
+public class CreateModel : AdminPageModel
 {
     private readonly ILogger<CreateModel> _logger;
     private readonly ZStoreDbContext _context;

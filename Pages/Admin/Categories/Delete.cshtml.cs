@@ -8,7 +8,7 @@ using zstore.net.Services.Storage;
 
 namespace zstore.net.Pages.Admin.Categories;
 
-public class DeleteModel : PageModel
+public class DeleteModel : AdminPageModel
 {
     private readonly ILogger<DeleteModel> _logger;
     private readonly ZStoreDbContext _context;

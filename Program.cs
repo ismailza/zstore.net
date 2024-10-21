@@ -26,7 +26,10 @@ builder.Services.AddScoped<IStorageService>(provider => {
 // Add the http context accessor to the container
 builder.Services.AddHttpContextAccessor();
 // Add the session service to the container
-builder.Services.AddSession();
+builder.Services.AddSession(options => 
+{
+    options.Cookie.HttpOnly = true;
+});
 // Add the cart service to the container
 builder.Services.AddScoped<ICartService>(provider =>
 {
@@ -38,7 +41,18 @@ builder.Services.AddScoped<ICartService>(provider =>
         _ => throw new InvalidOperationException("Invalid cart storage type"),
     };
 });
-
+// Configure two authentication schemes
+builder.Services.AddAuthentication()
+    // Admin authentication scheme
+    .AddCookie("AdminAuth", options => {
+        options.LoginPath = "/Admin/Auth/Login";
+        options.AccessDeniedPath = "/Admin/Auth/Login";
+    });
+// Configure authorization policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 

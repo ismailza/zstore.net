@@ -9,7 +9,7 @@ using zstore.net.Models;
 
 namespace zstore.net.Pages.Admin.Products;
 
-public class IndexModel : PageModel
+public class IndexModel : AdminPageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly ZStoreDbContext _context;

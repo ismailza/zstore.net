@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -27,19 +29,23 @@ public class LoginModel : PageModel
   public async Task<IActionResult> OnPostAsync()
   {
     var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Email == Username);
-    if (admin == null)
+    if (admin == null || !BCrypt.Net.BCrypt.Verify(Password, admin.Password))
     {
       ModelState.AddModelError("Username", "Invalid username or password");
       return Page();
     }
 
-    if (!Utils.Utils.VerifyHash(Password, admin.Password))
+    var claims = new List<Claim>
     {
-      ModelState.AddModelError("Username", "Invalid username or password");
-      return Page();
-    }
+        new Claim(ClaimTypes.Name, admin.Email),
+        new Claim(ClaimTypes.Role, "Admin")
+    };
 
-    HttpContext.Session.SetString("Admin", admin.Email);
+    var claimsIdentity = new ClaimsIdentity(claims, "AdminAuth");
+    var authProperties = new AuthenticationProperties { IsPersistent = true };
+
+    await HttpContext.SignInAsync("AdminAuth", new ClaimsPrincipal(claimsIdentity), authProperties);
+
     return RedirectToPage("/Admin/Index");
   }
 
