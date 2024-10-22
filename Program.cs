@@ -16,7 +16,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ZStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ZStoreConnection")));
 // Add the storage service to the container
-builder.Services.AddScoped<IStorageService>(provider => {
+builder.Services.AddScoped<IStorageService>(provider =>
+{
     return builder.Configuration.GetValue<string>("Storage:Type") switch
     {
         "FileSystem" => new FileSystemStorageService(builder.Environment),
@@ -26,7 +27,7 @@ builder.Services.AddScoped<IStorageService>(provider => {
 // Add the http context accessor to the container
 builder.Services.AddHttpContextAccessor();
 // Add the session service to the container
-builder.Services.AddSession(options => 
+builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
 });
@@ -42,17 +43,30 @@ builder.Services.AddScoped<ICartService>(provider =>
     };
 });
 // Configure two authentication schemes
-builder.Services.AddAuthentication()
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "AdminAuth";
+    options.DefaultChallengeScheme = "AdminAuth";
+})
     // Admin authentication scheme
-    .AddCookie("AdminAuth", options => {
+    .AddCookie("AdminAuth", options =>
+    {
         options.LoginPath = "/Admin/Auth/Login";
         options.AccessDeniedPath = "/Admin/Auth/Login";
         options.LogoutPath = "/Admin/Auth/Logout";
+    })
+    // Client authentication scheme
+    .AddCookie("ClientAuth", options =>
+    {
+        options.LoginPath = "/Client/Auth/Login";
+        options.AccessDeniedPath = "/Client/Auth/Login";
+        options.LogoutPath = "/Client/Auth/Logout";
     });
 // Configure authorization policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("ClientOnly", policy => policy.RequireRole("Client"));
 });
 
 var app = builder.Build();
@@ -70,8 +84,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
-
 app.UseSession();
+
+app.MapRazorPages();
 
 app.Run();
