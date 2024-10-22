@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
-using zstore.net.Models;
 using zstore.net.Data;
 using zstore.net.Services.Storage;
 
@@ -69,7 +65,6 @@ public class EditModel : AdminPageModel
         {
             _logger.LogError(ex, "An error occurred while updating the admin.");
             ModelState.AddModelError("", "An error occurred while updating the admin. Please try again.");
-            ViewData["Categories"] = new SelectList(_context.Categories, "Id", "Name");
             return Page();
         }
     }
