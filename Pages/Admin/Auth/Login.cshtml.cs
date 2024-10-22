@@ -37,8 +37,9 @@ public class LoginModel : PageModel
 
     var claims = new List<Claim>
     {
-        new Claim(ClaimTypes.Name, admin.Email),
-        new Claim(ClaimTypes.Role, "Admin")
+      new Claim(ClaimTypes.Name, admin.Firstname + " " + admin.Lastname),
+      new Claim(ClaimTypes.Email, admin.Email),
+      new Claim(ClaimTypes.Role, "Admin")
     };
 
     var claimsIdentity = new ClaimsIdentity(claims, "AdminAuth");

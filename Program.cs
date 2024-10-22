@@ -47,6 +47,7 @@ builder.Services.AddAuthentication()
     .AddCookie("AdminAuth", options => {
         options.LoginPath = "/Admin/Auth/Login";
         options.AccessDeniedPath = "/Admin/Auth/Login";
+        options.LogoutPath = "/Admin/Auth/Logout";
     });
 // Configure authorization policies
 builder.Services.AddAuthorization(options =>
@@ -64,6 +65,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
