@@ -47,7 +47,7 @@ public class IndexModel : PageModel
     // Apply search filter
     if (!string.IsNullOrEmpty(SearchTerm))
     {
-      query = query.Where(p => p.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase));
+      query = query.Where(p => p.Name.ToLower().Contains(SearchTerm.ToLower()));
     }
     // Apply category filter
     if (CategoryId.HasValue)
