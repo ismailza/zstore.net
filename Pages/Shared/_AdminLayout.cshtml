@@ -46,12 +46,20 @@
 
                             <span class="absolute top-0 left-0 p-1 text-xs text-white bg-blue-500 rounded-full"></span>
                         </button>
-                        <a href="/Admin/Profile" class="mx-4 flex items-center focus:outline-none" aria-label="toggle profile dropdown">
+                        <a href="/Admin/Account" class="mx-4 flex items-center focus:outline-none" aria-label="toggle account dropdown">
                             <div class="h-6 w-6 overflow-hidden border-2 border-gray-400 rounded-full">
                                 <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" class="object-cover w-full h-full" alt="avatar">
                             </div>
                             <h3 class="mx-2 text-gray-700 dark:text-gray-200 lg:hidden">Ismail ZAHIR</h3>
                         </a>
+                        <form asp-page="/Admin/Auth/Logout" method="post" class="mx-4 flex items-center focus:outline-none">
+                            <button type="submit" class="text-gray-700 transition-colors duration-300 transform dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-300">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
+                                </svg>
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             </div>
