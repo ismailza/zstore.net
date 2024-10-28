@@ -23,6 +23,7 @@ ZStore.net is an e-commerce platform designed to manage product categories, user
 - Shopping cart functionality
 - Order management
 - Customizable storage options
+- API documentation using Swagger
 
 ## Technology Stack
 - **Backend:** ASP.NET Core
@@ -30,6 +31,7 @@ ZStore.net is an e-commerce platform designed to manage product categories, user
 - **ORM:** Entity Framework Core
 - **Frontend:** Razor Pages (for now, expandable to Angular/React)
 - **Hosting:** Dockerized for easy deployment
+- **Documentation:** Swagger
 
 ## Getting Started
 
