@@ -43,17 +43,14 @@ builder.Services.AddScoped<ICartService>(provider =>
     };
 });
 // Configure two authentication schemes
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = "AdminAuth";
-    options.DefaultChallengeScheme = "AdminAuth";
-})
+builder.Services.AddAuthentication()
     // Admin authentication scheme
     .AddCookie("AdminAuth", options =>
     {
         options.LoginPath = "/Admin/Auth/Login";
         options.AccessDeniedPath = "/Admin/Auth/Login";
         options.LogoutPath = "/Admin/Auth/Logout";
+        options.Cookie.Name = "AdminAuth";
     })
     // Client authentication scheme
     .AddCookie("ClientAuth", options =>
@@ -61,12 +58,18 @@ builder.Services.AddAuthentication(options =>
         options.LoginPath = "/Client/Auth/Login";
         options.AccessDeniedPath = "/Client/Auth/Login";
         options.LogoutPath = "/Client/Auth/Logout";
+        options.Cookie.Name = "ClientAuth";
     });
 // Configure authorization policies
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-    options.AddPolicy("ClientOnly", policy => policy.RequireRole("Client"));
+    options.AddPolicy("AdminOnly", policy => 
+        policy.RequireRole("Admin")
+              .AuthenticationSchemes = ["AdminAuth"]);
+              
+    options.AddPolicy("ClientOnly", policy => 
+        policy.RequireRole("Client")
+              .AuthenticationSchemes = ["ClientAuth"]);
 });
 
 var app = builder.Build();
