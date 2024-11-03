@@ -26,10 +26,13 @@ public class LoginModel : PageModel
   [BindProperty]
   public String Password { get; set; } = "";
 
+  [BindProperty(SupportsGet = true)]
+  public string? ReturnUrl { get; set; }
+
   public async Task<IActionResult> OnPostAsync()
   {
     var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Email == Username);
-    if (admin == null || !BCrypt.Net.BCrypt.Verify(Password, admin.Password))
+    if (admin == null || !Utils.Utils.VerifyHash(Password, admin.Password))
     {
       ModelState.AddModelError("Username", "Invalid username or password");
       return Page();
@@ -47,6 +50,10 @@ public class LoginModel : PageModel
 
     await HttpContext.SignInAsync("AdminAuth", new ClaimsPrincipal(claimsIdentity), authProperties);
 
+    if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
+    {
+      return LocalRedirect(ReturnUrl);
+    }
     return RedirectToPage("/Admin/Index");
   }
 

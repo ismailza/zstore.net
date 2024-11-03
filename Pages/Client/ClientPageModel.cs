@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace zstore.net.Pages.Client;
 
-[Authorize(Roles = "Client")]
+[Authorize(AuthenticationSchemes = "ClientAuth", Policy = "ClientOnly")]
 public class ClientPageModel : PageModel
 {
 }

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using zstore.net.Data;
-using zstore.net.Utils;
 
 namespace zstore.net.Pages.Client.Auth;
 
@@ -21,14 +20,20 @@ public class LoginModel : PageModel
   }
 
   [BindProperty]
+  [Required(ErrorMessage = "Username is required")]
   public String Username { get; set; } = "";
   [BindProperty]
+  [Required(ErrorMessage = "Password is required")]
+  [DataType(DataType.Password)]
   public String Password { get; set; } = "";
+
+  [BindProperty(SupportsGet = true)]
+  public string? ReturnUrl { get; set; }
 
   public async Task<IActionResult> OnPostAsync()
   {
     var user = await _context.Users.FirstOrDefaultAsync(a => a.Email == Username || a.Username == Username);
-    if (user == null || !BCrypt.Net.BCrypt.Verify(Password, user.Password))
+    if (user == null || !Utils.Utils.VerifyHash(Password, user.Password))
     {
       ModelState.AddModelError("Username", "Invalid username or password");
       return Page();
@@ -36,15 +41,25 @@ public class LoginModel : PageModel
 
     var claims = new List<Claim>
     {
-      new Claim(ClaimTypes.Name, user.Firstname + " " + user.Lastname),
-      new Claim(ClaimTypes.Email, user.Email),
-      new Claim(ClaimTypes.Role, "Client")
+      new(ClaimTypes.Name, user.Firstname + " " + user.Lastname),
+      new(ClaimTypes.Email, user.Email),
+      new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+      new(ClaimTypes.Role, "Client")
     };
 
     var claimsIdentity = new ClaimsIdentity(claims, "ClientAuth");
-    var authProperties = new AuthenticationProperties { IsPersistent = true };
+    var authProperties = new AuthenticationProperties
+    {
+      IsPersistent = true,
+      ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+    };
 
     await HttpContext.SignInAsync("ClientAuth", new ClaimsPrincipal(claimsIdentity), authProperties);
+
+    if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
+    {
+      return LocalRedirect(ReturnUrl);
+    }
 
     return RedirectToPage("/Client/Index");
   }
