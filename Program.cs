@@ -91,7 +91,40 @@ builder.Services.AddAuthorization(options =>
               .AuthenticationSchemes = ["ClientAuth"]);
 });
 
+// Register Swagger services
+var swaggerSettings = builder.Configuration.GetSection("Documentations:Swagger");
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc(swaggerSettings.GetValue<string>("Version"), new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = swaggerSettings.GetValue<string>("Title"),
+        Version = swaggerSettings.GetValue<string>("Version"),
+        Description = swaggerSettings.GetValue<string>("Description"),
+        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        {
+            Name = swaggerSettings.GetSection("Contact").GetValue<string>("Name"),
+            Email = swaggerSettings.GetSection("Contact").GetValue<string>("Email"),
+        }
+    });
+
+    // Include XML comments
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
+
 var app = builder.Build();
+
+// Enable Swagger middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint($"/swagger/{swaggerSettings.GetValue<string>("Version")}/swagger.json", $"zstore.net API {swaggerSettings.GetValue<string>("Version")}");
+        c.RoutePrefix = "api/docs/swagger";
+    });
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
