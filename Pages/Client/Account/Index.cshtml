@@ -1,0 +1,151 @@
+@page
+@model IndexModel
+@{
+  ViewData["Title"] = "Client Account";
+  var homeUrl = "/Client";
+  var breadcrumbItems = new List<(string Title, string Url)>
+  {
+    ("Account", "#")
+  };
+}
+
+<partial name="_Breadcrumb" model="(homeUrl, breadcrumbItems)" />
+
+@if (TempData["SuccessMessage"] != null)
+{
+  <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+    <p>@TempData["SuccessMessage"]</p>
+  </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+  <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+    <p>@TempData["ErrorMessage"]</p>
+  </div>
+}
+
+<section class="container px-4 mx-auto mt-4">
+  <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+    <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+      Account information
+    </h2>
+    <form method="post" asp-page-handler="UpdateInfo">
+      <input type="hidden" asp-for="Client.Id" />
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Firstname">
+            Firstname <span class="text-red-500">*</span>
+          </label>
+          <input id="firstname" asp-for="Client.Firstname" placeholder="Your firstname" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Lastname">
+            Lastname <span class="text-red-500">*</span>
+          </label>
+          <input id="lastname" asp-for="Client.Lastname" placeholder="Your lastname" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Email">
+            Email <span class="text-red-500">*</span>
+          </label>
+          <input id="email" asp-for="Client.Email" placeholder="Your email" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <button type="submit"
+          class="px-8 py-2 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+    <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+      Address information
+    </h2>
+    <form method="post" asp-page-handler="UpdateAddress">
+      <input type="hidden" asp-for="Client.Id" />
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.Street">
+            Street <span class="text-red-500">*</span>
+          </label>
+          <input id="Street" asp-for="Client.Address.Street" placeholder="Street" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.City">
+            City <span class="text-red-500">*</span>
+          </label>
+          <input id="City" asp-for="Client.Address.City" placeholder="City" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.State">
+            State <span class="text-red-500">*</span>
+          </label>
+          <input id="State" asp-for="Client.Address.State" placeholder="State" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.Zip">
+            Zip <span class="text-red-500">*</span>
+          </label>
+          <input id="Zip" asp-for="Client.Address.Zip" placeholder="Zip" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.Country">
+            Country <span class="text-red-500">*</span>
+          </label>
+          <input id="Country" asp-for="Client.Address.Country" placeholder="Country" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <button type="submit"
+          class="px-8 py-2 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="max-w-4xl p-6 mx-auto mt-4 bg-white rounded-md shadow-md dark:bg-gray-800">
+    <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+      Password
+    </h2>
+    <form method="post" asp-page-handler="UpdatePassword">
+      <input type="hidden" asp-for="Client.Id" />
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="CurrentPassword">
+            Current password <span class="text-red-500">*</span>
+          </label>
+          <input id="CurrentPassword" type="password" asp-for="CurrentPassword" placeholder="Your current password"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="NewPassword">
+            New password <span class="text-red-500">*</span>
+          </label>
+          <input id="NewPassword" type="password" asp-for="NewPassword" placeholder="New password" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="ConfirmPassword">
+            Confirm password <span class="text-red-500">*</span>
+          </label>
+          <input id="ConfirmPassword" type="password" asp-for="ConfirmPassword" placeholder="Confirm your password"
+            required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <button type="submit"
+          class="px-8 py-2 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600">Save</button>
+      </div>
+    </form>
+  </div>
+</section>

@@ -24,4 +24,16 @@ public class Address
   [Required]
   public required string Country { get; set; }
 
+  public Address()
+  {
+  }
+
+  public Address(string street, string city, string state, string zip, string country)
+  {
+    Street = street;
+    City = city;
+    State = state;
+    Zip = zip;
+    Country = country;
+  }
 }
