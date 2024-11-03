@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using zstore.net.Data;
 using zstore.net.Services.Storage;
 using zstore.net.Services.Cart;
+using zstore.net.Services.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,19 @@ Env.Load();
 // Add services to the container.
 // Add the Razor Pages services to the container
 builder.Services.AddRazorPages();
+
+// Add controllers services to the container
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
+
 // Add the database context to the container
 builder.Services.AddDbContext<ZStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ZStoreConnection")));
+
 // Add the storage service to the container
 builder.Services.AddScoped<IStorageService>(provider =>
 {
@@ -24,13 +35,16 @@ builder.Services.AddScoped<IStorageService>(provider =>
         _ => throw new InvalidOperationException("Invalid storage service type"),
     };
 });
+
 // Add the http context accessor to the container
 builder.Services.AddHttpContextAccessor();
+
 // Add the session service to the container
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
 });
+
 // Add the cart service to the container
 builder.Services.AddScoped<ICartService>(provider =>
 {
@@ -42,6 +56,10 @@ builder.Services.AddScoped<ICartService>(provider =>
         _ => throw new InvalidOperationException("Invalid cart storage type"),
     };
 });
+
+// Add the product service to the container
+builder.Services.AddScoped<IProductService, ProductService>();
+
 // Configure two authentication schemes
 builder.Services.AddAuthentication()
     // Admin authentication scheme
@@ -60,6 +78,7 @@ builder.Services.AddAuthentication()
         options.LogoutPath = "/Client/Auth/Logout";
         options.Cookie.Name = "ClientAuth";
     });
+
 // Configure authorization policies
 builder.Services.AddAuthorization(options =>
 {
@@ -79,6 +98,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -90,5 +110,7 @@ app.UseAuthorization();
 app.UseSession();
 
 app.MapRazorPages();
+
+app.MapControllers();
 
 app.Run();
