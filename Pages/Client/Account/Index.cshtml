@@ -30,27 +30,27 @@
       Account information
     </h2>
     <form method="post" asp-page-handler="UpdateInfo">
-      <input type="hidden" asp-for="Client.Id" />
+      <input type="hidden" asp-for="Client!.Id" />
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Firstname">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Firstname">
             Firstname <span class="text-red-500">*</span>
           </label>
-          <input id="firstname" asp-for="Client.Firstname" placeholder="Your firstname" required
+          <input id="firstname" asp-for="Client!.Firstname" placeholder="Your firstname" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Lastname">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Lastname">
             Lastname <span class="text-red-500">*</span>
           </label>
-          <input id="lastname" asp-for="Client.Lastname" placeholder="Your lastname" required
+          <input id="lastname" asp-for="Client!.Lastname" placeholder="Your lastname" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Email">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Email">
             Email <span class="text-red-500">*</span>
           </label>
-          <input id="email" asp-for="Client.Email" placeholder="Your email" required
+          <input id="email" asp-for="Client!.Email" placeholder="Your email" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
       </div>
@@ -66,41 +66,41 @@
       Address information
     </h2>
     <form method="post" asp-page-handler="UpdateAddress">
-      <input type="hidden" asp-for="Client.Id" />
+      <input type="hidden" asp-for="Client!.Id" />
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.Street">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Address!.Street">
             Street <span class="text-red-500">*</span>
           </label>
-          <input id="Street" asp-for="Client.Address.Street" placeholder="Street" required
+          <input id="Street" asp-for="Client!.Address!.Street" placeholder="Street" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.City">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Address!.City">
             City <span class="text-red-500">*</span>
           </label>
-          <input id="City" asp-for="Client.Address.City" placeholder="City" required
+          <input id="City" asp-for="Client!.Address!.City" placeholder="City" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.State">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Address!.State">
             State <span class="text-red-500">*</span>
           </label>
-          <input id="State" asp-for="Client.Address.State" placeholder="State" required
+          <input id="State" asp-for="Client!.Address!.State" placeholder="State" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.Zip">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Address!.Zip">
             Zip <span class="text-red-500">*</span>
           </label>
-          <input id="Zip" asp-for="Client.Address.Zip" placeholder="Zip" required
+          <input id="Zip" asp-for="Client!.Address!.Zip" placeholder="Zip" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
         <div>
-          <label class="text-gray-700 dark:text-gray-200" asp-for="Client.Address.Country">
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Client!.Address!.Country">
             Country <span class="text-red-500">*</span>
           </label>
-          <input id="Country" asp-for="Client.Address.Country" placeholder="Country" required
+          <input id="Country" asp-for="Client!.Address!.Country" placeholder="Country" required
             class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
         </div>
       </div>
@@ -116,7 +116,7 @@
       Password
     </h2>
     <form method="post" asp-page-handler="UpdatePassword">
-      <input type="hidden" asp-for="Client.Id" />
+      <input type="hidden" asp-for="Client!.Id" />
       <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-3">
         <div>
           <label class="text-gray-700 dark:text-gray-200" asp-for="CurrentPassword">

@@ -1,0 +1,81 @@
+@page
+@model IndexModel
+@{
+  ViewData["Title"] = "Checkout";
+  var homeUrl = "/Client";
+  var breadcrumbItems = new List<(string Title, string Url)>
+  {
+    ("Checkout", "#")
+  };
+}
+
+<partial name="_Breadcrumb" model="(homeUrl, breadcrumbItems)" />
+
+<section class="container px-4 mx-auto mt-4">
+  <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+    <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+      Account information
+    </h2>
+    <div class="flex justify-center items-center gap-x-2">
+      <img class="object-cover w-10 h-10 rounded-full" src="/images/placeholder.svg" alt="">
+      <div>
+        <h2 class="font-medium text-gray-800 dark:text-white">
+          @Model.Client!.Lastname @Model.Client.Firstname
+        </h2>
+        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+          @Model.Client.Email
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+    <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+      Shipping address
+    </h2>
+    <form method="post">
+      <input type="hidden" asp-for="Client!.Id" />
+      <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Order.Address!.Street">
+            Street <span class="text-red-500">*</span>
+          </label>
+          <input id="Street" asp-for="Order.Address!.Street" placeholder="Street" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Order.Address!.City">
+            City <span class="text-red-500">*</span>
+          </label>
+          <input id="City" asp-for="Order.Address!.City" placeholder="City" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Order.Address!.State">
+            State <span class="text-red-500">*</span>
+          </label>
+          <input id="State" asp-for="Order.Address!.State" placeholder="State" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Order.Address!.Zip">
+            Zip <span class="text-red-500">*</span>
+          </label>
+          <input id="Zip" asp-for="Order.Address!.Zip" placeholder="Zip" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+        <div>
+          <label class="text-gray-700 dark:text-gray-200" asp-for="Order.Address!.Country">
+            Country <span class="text-red-500">*</span>
+          </label>
+          <input id="Country" asp-for="Order.Address!.Country" placeholder="Country" required
+            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+        </div>
+      </div>
+      <div class="flex justify-end mt-6">
+        <button type="submit"
+          class="px-8 py-2 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600">Confirm</button>
+      </div>
+    </form>
+  </div>
+  
+</section>

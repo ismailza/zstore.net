@@ -14,7 +14,11 @@
 <section class="bg-white dark:bg-gray-900">
   <div class="container px-6 py-10 mx-auto">
     <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">Your <span
-        class="underline decoration-blue-500">Shopping Cart</span></h1>
+        class="underline decoration-blue-500">Shopping Cart</span>
+      <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400 lowercase">
+        @Model.cartItems.Count item(s)
+      </span>
+    </h1>
     <p class="mt-4 text-gray-500 xl:mt-6 dark:text-gray-300">
       Here are the items you have added to your cart. You can update the quantity or remove items from your cart.
     </p>
@@ -85,8 +89,6 @@
             <!-- Subtotal & Add to Cart -->
             <div class="flex justify-between mt-4 items-center">
               <h1 class="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">Subtotal: @subtotal MAD</h1>
-              <button
-                class="px-3 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Checkout</button>
             </div>
           </div>
         </div>
@@ -94,13 +96,13 @@
     </div>
 
     <!-- Total Summary -->
-    <div class="mt-8">
+    <div class="mt-8 flex justify-between items-center">
       <h2 class="text-xl font-bold text-gray-800 dark:text-white">Total: @Model.cartItems.Sum(item => item.Key.Price *
         item.Value) MAD</h2>
-      <button
-        class="mt-4 px-6 py-3 text-sm font-bold text-white bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+      <a href="@(Model.cartItems.Count == 0 ? "/Shop" : "/Client/Checkout")"
+        class="px-6 py-3 text-sm font-bold text-white bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
         Proceed to Checkout
-      </button>
+      </a>
     </div>
   </div>
 </section>

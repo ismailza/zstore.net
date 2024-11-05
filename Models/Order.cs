@@ -16,10 +16,8 @@ public class Order
   [Required]
   public required long AddressId { get; set; }
 
-  [Required]
   [NotMapped]
-  [Range(0, Double.MaxValue)]
-  public required double Total { get; set; }
+  public double Total => OrderItems.Sum(item => item.Price * item.Quantity);
 
   [Required]
   public OrderStatus Status { get; set; } = OrderStatus.PENDING;

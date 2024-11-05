@@ -109,14 +109,14 @@ public class IndexModel : ClientPageModel
     {
       existingClient.Address = new Address
       {
-        Street = Client.Address.Street,
+        Street = Client!.Address!.Street,
         City = Client.Address.City,
         State = Client.Address.State,
         Zip = Client.Address.Zip,
         Country = Client.Address.Country
       };
     } else {
-      existingClient.Address.Street = Client.Address.Street;
+      existingClient.Address.Street = Client!.Address!.Street;
       existingClient.Address.City = Client.Address.City;
       existingClient.Address.State = Client.Address.State;
       existingClient.Address.Zip = Client.Address.Zip;

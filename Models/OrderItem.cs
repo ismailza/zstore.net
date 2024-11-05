@@ -22,10 +22,8 @@ public class OrderItem
   [Required]
   public required double Price { get; set; }
 
-  [Required]
   [NotMapped]
-  [Range(0, Double.MaxValue)]
-  public required double Total { get; set; }
+  public double Total => Price * Quantity;
 
   [ForeignKey("OrderId")]
   public Order? Order { get; set; }
